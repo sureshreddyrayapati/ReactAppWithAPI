@@ -20,17 +20,34 @@ const ProductList = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Products</h2>
-      <ul className="space-y-2">
-        {products.map((p) => (
-          <li key={p.prodct_Id} className="border p-2 rounded shadow">
-            <p><strong>{p.product_Name}</strong></p>
-            <p>Price: ₹{p.product_price}</p>
-            <p>Expiry: {p.product_expityDate}</p>
-          </li>
-        ))}
-      </ul>
+  <h2 className="text-xl font-bold mb-4">Products</h2>
+
+  {products.length > 0 && (
+    <div className="overflow-x-auto">
+      <table border={2}>
+        <thead className="bg-gray-100">
+          <tr>
+            <th className="px-4 py-2 border">Id</th>
+            <th className="px-4 py-2 border">Product Name</th>
+            <th className="px-4 py-2 border">Price (₹)</th>
+            <th className="px-4 py-2 border">Expiry Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((p) => (
+            <tr key={p.prodct_Id} className="hover:bg-gray-50">
+              <td className="px-4 py-2 border">{p.prodct_Id}</td>
+              <td className="px-4 py-2 border">{p.product_Name}</td>
+              <td className="px-4 py-2 border">{p.product_price}</td>
+              <td className="px-4 py-2 border">{p.product_expityDate}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
+  )}
+</div>
+
   );
 };
 
