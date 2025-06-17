@@ -11,13 +11,13 @@ type Product = {
 
 const ProductList = () => {
   const [products, setProducts] = useState<Product[]>([]);
-
+  
   useEffect(() => {
     getProducts()
       .then((res) => setProducts(res.data))
       .catch((err) => console.error(err));
   }, []);
-
+  
   return (
     <div className="p-4">
   <h2 className="text-xl font-bold mb-4">Products</h2>

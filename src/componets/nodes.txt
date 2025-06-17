@@ -1,0 +1,95 @@
+import { useEffect, useState } from "react";
+import { getProducts } from "../Api/productsApi";
+
+type Product = {
+  prodct_Id: number;
+  product_Name: string;
+  product_price: number;
+  product_expityDate: string;
+};
+
+const ProductList = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [cart, setCart] = useState<Product[]>([]);
+
+  useEffect(() => {
+    getProducts()
+      .then((res) => setProducts(res.data))
+      .catch((err) => console.error(err));
+  }, []);
+
+  const handleAddToCart = (product: Product) => {
+    setCart((prevCart) => [...prevCart, product]);
+  };
+
+  return (
+    <div className="p-4 space-y-6">
+      <div>
+        <h2 className="text-xl font-bold mb-4">Products</h2>
+
+        {products.length > 0 && (
+          <div className="overflow-x-auto">
+            <table className="min-w-full border border-gray-300 rounded">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="px-4 py-2 border">Id</th>
+                  <th className="px-4 py-2 border">Product Name</th>
+                  <th className="px-4 py-2 border">Price (₹)</th>
+                  <th className="px-4 py-2 border">Expiry Date</th>
+                  <th className="px-4 py-2 border">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products.map((p) => (
+                  <tr key={p.prodct_Id} className="hover:bg-gray-50">
+                    <td className="px-4 py-2 border">{p.prodct_Id}</td>
+                    <td className="px-4 py-2 border">{p.product_Name}</td>
+                    <td className="px-4 py-2 border">{p.product_price}</td>
+                    <td className="px-4 py-2 border">{p.product_expityDate}</td>
+                    <td className="px-4 py-2 border">
+                      <button
+                        onClick={() => handleAddToCart(p)}
+                        className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                      >
+                        Add
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      {/* Cart Table */}
+      {cart.length > 0 && (
+        <div>
+          <h2 className="text-xl font-bold mb-4">Cart</h2>
+          <table className="min-w-full border border-gray-300 rounded">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="px-4 py-2 border">Id</th>
+                <th className="px-4 py-2 border">Product Name</th>
+                <th className="px-4 py-2 border">Price (₹)</th>
+                <th className="px-4 py-2 border">Expiry Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cart.map((item, index) => (
+                <tr key={index} className="hover:bg-gray-50">
+                  <td className="px-4 py-2 border">{item.prodct_Id}</td>
+                  <td className="px-4 py-2 border">{item.product_Name}</td>
+                  <td className="px-4 py-2 border">{item.product_price}</td>
+                  <td className="px-4 py-2 border">{item.product_expityDate}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ProductList;
