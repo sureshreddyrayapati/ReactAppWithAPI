@@ -27,7 +27,7 @@ const UpdateProduct = () => {
 
   return (
     <form onSubmit={handleUpdate}>
-        <h2>Update Product</h2>
+    <h2>Update Product</h2>
       <input name="prodct_Id" onChange={handleChange} placeholder="Product ID" />
       <input name="product_Name" onChange={handleChange} placeholder="New Name" />
       <input name="product_Price" onChange={handleChange} placeholder="New Price" />
